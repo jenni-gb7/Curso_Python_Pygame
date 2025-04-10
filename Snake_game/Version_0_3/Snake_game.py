@@ -1,43 +1,47 @@
 """
-Nombre:
-Fecha:
-Versión 0.1:
+Nombre: Patricia Pérez Cruz
+Fecha: 08/04/2025
+Version 02:
+-Se agregó la clase Configurations en el módulo Cnfigurations.py que va a incluir todas las
+configuraciones del juego
+-Se agregó el módul Game funcine que admiistra los eve
 """
-
-
-# Se importan los módulos del videojuego.
 import pygame
 from Configurations import Configurations
-from Game_functionalities import game_events, screen_refresh
-from Snake import SnakeBlock
+from Game_functionalities import game_event, screen_refresh
+from Snake import  SnakeBlock
+
 
 def run_game() -> None:
     """
-    Función principal del videojuego.
+    Función principal del videojuego
     """
-    # Se incializa el módulo de pygame.
+    #Se inicializa el módulo pygame
     pygame.init()
+    #Se condigur EL RELJ DEL JUEGO
+    clock = pygame.time.Clock()
 
-    # Se inicializa la pantalla.
-    screen = pygame.display.set_mode(Configurations.get_screen_size())
+    #Se inicializa la pantalla
+    #screen_size = (1280, 720) #Resolución de la pantalla (ancho, alto)
+    screen = pygame.display.set_mode(Configurations.get_screen_size() )
 
-    # Se configura el título del juego.pip install setuptools
+    #Se configura el título del juego
+    #game_title = "Snake game en pygame"
     pygame.display.set_caption(Configurations.get_game_title())
+    #Se crea el bloque inicial de la serpiente (cabeza)
+    snake_head = SnakeBlock(is_head= True)
+    snake_head.snake_head_init()
 
-    # Se crea el bloque inicial de la serpiente (cabeza).
-    snake_head = SnakeBlock()
-
-    # Ciclo principal del videojuego.
+    #Ciclo principal de videojuego
     game_over = False
 
     while not game_over:
-        # Se verifican los eventos (teclado y ratón) del huego.
-        game_over = game_events()
+        game_over = game_event()
 
-        screen_refresh(screen, snake_head)
+        screen_refresh(screen, clock, snake_head)
 
-    #Se cierran los recurso de pygame.
-    pygame.quit()
+#Se cierran los eventos
+pygame.quit()
 
 if __name__ == '__main__':
     run_game()
