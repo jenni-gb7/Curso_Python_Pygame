@@ -1,17 +1,16 @@
 """
 Nombre: Jennifer Marlene Gutiérrez Beteta
 Fecha: 08/04/2025
-Version 05:
-- Se agregaron banderas de movimiento como atributos de clase de SnakeBlock, ya que van a indicar el movimiento
-  de la cabeza de la serpiente. De igual manera, se agregaron los getter y setters de esos atributos como
-  métodos de clase.
-- Las banderas se modifican de acuerdo a la tecla presionada (⬅️⬆️⬇️➡️) en la función game_events().
-- Como la idea del juego es que la serpiente se encuentre en movimiento, entonces siempre se tiene una bandera
-  como verdadera.
-- Se agregó la función snake_movement() en el módulo Game_functionalities.py, que va a actualizar el movimiento
-  de la serpiente. En esta versión, únicamente actualiza la cabeza de la serpiente.
-- Como resultado, se tiene un cuadrado que se mueve por toda la pantalla y fuera de ella.
-
+Versión 0.6:
+- Se añadió que, con la tecla 'espacio', se agrega un objeto de la clase SnakeBlock al cuerpo de la serpiente.
+  * Esto se realizó en la función game_events().
+  * Este evento se va a reemplazar más adelante por la 'manzana' de la serpiente.
+- Se modificó la función snake_movement() para que considere el movimiento de toda la serpiente, considerando que
+  los bloques tienen que ocupar la posición del bloque previo, por ejemplo:
+  * posición del bloque[3] ➡️ tiene que ubicarse en la posición del bloque[2],
+  * posición del bloque[2] ➡️ tiene que ubicarse en la posición del bloque[1],
+  * posición del bloque[1] ➡️ tiene que ubicarse en la posición del bloque[0],
+  * posición del bloque[0] (cabeza) ➡️ moverse de acuerdo a la bandera.
 """
 # Se importan los módulos necesarios.
 import pygame
@@ -42,10 +41,10 @@ def run_game() -> None:
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
+        """CAMBIO. Ahora recibe el cuerpo de la serpiente para añadir el nuevo bloque al presionar 'espacio'."""
         # Función que administra los eventos del juego.
-        game_over = game_events()
+        game_over = game_events(snake_body)
 
-        """NUEVO."""
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
 

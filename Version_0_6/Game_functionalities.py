@@ -1,11 +1,12 @@
 import pygame
 from Configurations import Configurations
-"""NUEVO."""
 from Snake import SnakeBlock
 
-def game_events() -> bool:
+"""CAMBIO. Ahora recibe el cuerpo de la serpiente para añadir el nuevo bloque al presionar la tecla 'espacio'."""
+def game_events(snake_body: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos del juego.
+    :param snake_body: Grupo con el cuerpo de la serpiente.
     :return: La bandera de fin del juego.
     """
     # Se declara la bandera de fin del juego que se retorna.
@@ -19,7 +20,6 @@ def game_events() -> bool:
 
         # El evento es presionar una tecla (KEYDOWN).
         elif event.type == pygame.KEYDOWN:
-            """NUEVO. Se verifican los eventos de teclado."""
             # Movimiento hacia la derecha.
             if event.key == pygame.K_RIGHT:
                 SnakeBlock.set_is_moving_right(True)
@@ -48,16 +48,27 @@ def game_events() -> bool:
                 SnakeBlock.set_is_moving_up(False)
                 SnakeBlock.set_is_moving_down(True)
 
+            """NUEVO."""
+            # Se agrega un nuevo bloque al cuerpo de la serpiente.
+            if event.key == pygame.K_SPACE:
+                new_snake_block = SnakeBlock()
+                snake_body.add(new_snake_block)
+
     # Se regresa la bandera.
     return game_over
 
 
-"""NUEVO."""
 def snake_movement(snake_body: pygame.sprite.Group) -> None:
     """
     Función que gestiona los movimientos de los bloques que componen el cuerpo de la serpiente.
     :param snake_body: Grupo con el cuerpo de la serpiente.
     """
+    """NUEVO."""
+    # Para el movimiento de cada bloque de la serpiente, se debe asignar la posición de su bloque predecesor.
+    body_size = len(snake_body.sprites()) - 1
+    for i in range(body_size, 0, -1):
+        snake_body.sprites()[i].rect.x = snake_body.sprites()[i - 1].rect.x
+        snake_body.sprites()[i].rect.y = snake_body.sprites()[i - 1].rect.y
 
     # El movimiento de la cabeza de la serpiente depende de las banderas de movimiento.
     head = snake_body.sprites()[0]          # La cabeza de la serpiente es el elemento [0] del grupo.
@@ -89,6 +100,10 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     # Se dibuja la serpiente, dibujando primero el último bloque y al último la cabeza de la serpiente.
     for snake_block in reversed(snake_body.sprites()):
         snake_block.blit(screen)
+
+    """NOTA. Probar con lo siguiente en lugar del ciclo for anterior."""
+    # Es más eficiente, pero siempre dibuja en el orden en que fueron agregados al grupo.
+    #snake_body.draw(screen)
 
     # Se actualiza la pantalla, dando la impresión de movimiento.
     pygame.display.flip()
