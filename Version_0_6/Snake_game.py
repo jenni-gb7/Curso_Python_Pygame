@@ -1,5 +1,5 @@
 """
-Nombre: Jennifer Marlene Gutiérrez Beteta
+Nombre: Jennifer Marlene Gutiérrez Beteta.
 Fecha: 08/04/2025
 Versión 0.6:
 - Se añadió que, con la tecla 'espacio', se agrega un objeto de la clase SnakeBlock al cuerpo de la serpiente.
