@@ -58,7 +58,6 @@ def game_events(snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) ->
                 new_snake_block = SnakeBlock()
                 snake_body.add(new_snake_block)
 
-                apples.remove(apples.sprites()[0])      # Se remueve la primera manzana del grupo.
                 new_apple = Apple()
                 new_apple.random_position(snake_body)
                 apples.add(new_apple)

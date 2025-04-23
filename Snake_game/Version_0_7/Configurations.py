@@ -5,7 +5,7 @@ class Configurations:
     # Configuraciones de la pantalla.
     _game_title = "Snake game en pygame"            # Título de la ventana.
     _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
-    _background = (20, 30, 50)                      # Fondo de la pantalla en formato RGB.
+    _background = (234, 137, 154)                      # Fondo de la pantalla en formato RGB.
     _fps = 8                                        # Número máximo de FPS del videojuego.
 
     # Configuraciones de la serpiente.

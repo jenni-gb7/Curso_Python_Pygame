@@ -41,7 +41,7 @@ class Apple(Sprite):
         screen.blit(self.image, self.rect)
 
 
-    def random_position(self, snake_body: pygame.sprite.Group) -> None:
+    def random_position(self,snake_body: pygame.sprite.Group) -> None:
         """
         Se utiliza para inicializar una ubicación aleatoria de la manzana, restringiendo a las ubicaciones
         en donde no se encuentre el cuerpo de la serpiente.
