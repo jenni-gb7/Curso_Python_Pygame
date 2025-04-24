@@ -60,6 +60,11 @@ def game_events(snake_body: pygame.sprite.Group, apples: pygame.sprite.Group) ->
 
                 new_apple = Apple()
                 new_apple.random_position(snake_body)
+                print(Apple.get_no_apples())
+
+                apples.remove(apples.sprites()[0])
+                # Forma diferente.
+                #apples.empty
                 apples.add(new_apple)
 
     # Se regresa la bandera.

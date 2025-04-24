@@ -4,6 +4,7 @@ from Configurations import Configurations
 from random import randint
 
 class Apple(Sprite):
+
     """
     Clase que representa una manzana.
     Hereda de la clase Sprite para utilizar grupos de sprites y detectar colisiones entre sprites.
