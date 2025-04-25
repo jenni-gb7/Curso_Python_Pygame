@@ -7,6 +7,7 @@ class Configurations:
     _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
     _background = (234, 137, 154)                      # Fondo de la pantalla en formato RGB.
     _fps = 8                                        # Número máximo de FPS del videojuego.
+    _game_over_screen_time =  1
 
     # Configuraciones de la serpiente.
     _snake_block_size = 80                          # Tamaño del bloque. Es muy recomendable que sea
@@ -56,11 +57,18 @@ class Configurations:
         return cls._snake_block_size
 
     @classmethod
-    def get_snake_head_color(cls) -> tuple[int, int, int]:
+    def get_snake_head_color(cls) ->  tuple[int, int, int]:
         """
         Getter para _snake_head_color.
         """
         return cls._snake_head_color
+
+    @classmethod
+    def get_game_over_screen_time(cls) -> int:
+        """
+        Getter para _game_over_screen_time
+        """
+        return cls._game_over_screen_time
 
     @classmethod
     def get_snake_body_color(cls) -> tuple[int, int, int]:

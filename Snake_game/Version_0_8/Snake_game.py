@@ -15,7 +15,7 @@ Versión 0.6:
 # Se importan los módulos necesarios.
 import pygame
 from Configurations import Configurations
-from Game_functionalities import game_events, screen_refresh, snake_movement,check_colision
+from Game_functionalities import game_events, screen_refresh, snake_movement,check_colision, game_over_screen
 from Snake import SnakeBlock
 from pygame.sprite import Group
 """NUEVO."""
@@ -54,7 +54,11 @@ def run_game() -> None:
     while not game_over:
         """CAMBIO. Ahora la función recibe el grupo de manzanas."""
         # Función que administra los eventos del juego.
-        game_over = game_events(snake_body, apples)
+        game_over =game_events()
+
+        # Condición de que cerró la ventana.
+        if game_over:
+            break
 
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
@@ -65,6 +69,10 @@ def run_game() -> None:
         """CAMBIO. Ahora la función recibe el grupo de manzanas."""
         # Función que administra los elementos de la pantalla.
         screen_refresh(screen, clock, snake_body, apples)
+
+        # Si se ha perdido el juego, se llama
+        if game_over:
+            game_over_screen()
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()
