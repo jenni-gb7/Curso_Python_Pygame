@@ -23,7 +23,8 @@ class Configurations:
     # Las rutas de los archivos multimedia.
     _background_image_path = "../media/background_image.jpg"
     _apple_image_path = "../media/apple1.png"
-
+    _snake_head_image_path = "../media/head1.png"
+    _snake_body_images_path = ["../media/body1.png","../media/body2.png","../media/body3.png"]
     @classmethod
     def get_game_title(cls) -> str:
         """
@@ -98,6 +99,20 @@ class Configurations:
     @classmethod
     def get_apple_image_path(cls) -> str:
         """
-        Getter para _background_image_path.
+        Getter para _apple_image_path.
         """
         return cls._apple_image_path
+
+    @classmethod
+    def get_snake_head_image_path(cls) -> str:
+        """
+        Getter _snake_head_image_path.
+        """
+        return cls._snake_head_image_path
+
+    @classmethod
+    def get_snake_body_images_path(cls) -> list:
+        """
+        Getter _snake_body_image_path.
+        """
+        return cls._snake_body_images_path

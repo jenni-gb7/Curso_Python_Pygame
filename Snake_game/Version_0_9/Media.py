@@ -7,7 +7,6 @@ class Background:
 
     def __init__(self):
         background_image_path = Configurations.get_background_image_path()
-        apple_image_path = Configurations.get_apple_image_path()
         self.image = pygame.image.load(background_image_path)
 
         # Se escala la imagen al tamaño de pantalla.

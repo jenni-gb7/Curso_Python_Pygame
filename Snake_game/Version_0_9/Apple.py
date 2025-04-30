@@ -30,6 +30,10 @@ class Apple(Sprite):
         self.image = pygame.Surface((Configurations.get_apple_block_size(), Configurations.get_apple_block_size()))
         self.image.fill(Configurations.get_apple_color())
 
+        self.image = pygame.image.load("../media/apple1.png")
+        apple_block_size = Configurations.get_apple_block_size()
+        self.image = pygame.transform.scale(self.image,(apple_block_size,apple_block_size))
+
         # Se obtiene el rectángulo que representa la posición del sprite.
         self.rect = self.image.get_rect()
 
