@@ -51,6 +51,8 @@ def run_game() -> None:
     apples = Group()
     apples.add(apple)
 
+    # Ciclo principal del videojuego.
+
     # Se crea el objeto con el fondo del videojuego.
     background = Background()
     apple = Apple()
