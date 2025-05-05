@@ -90,7 +90,7 @@ class Apple(Sprite):
         dando la impresioón de movimiento.
         """
         current_time = pygame.time.get_ticks()
-        time_to_refresh = Configurations.get_time_to_refresh()
+        time_to_refresh = Configurations.get_time_to_refresh_apple_frames()
 
         needs_refresh = (current_time - self._last_update_time) >= time_to_refresh
 

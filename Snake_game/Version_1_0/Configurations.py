@@ -24,10 +24,11 @@ class Configurations:
     _background_image_path = "../media/background_image.jpg"
     _apple_images_path = ["../media/apple1.png", "../media/apple2.png", "../media/apple3.png", "../media/apple4.png"]
     _snake_head_image_path = "../media/head1.png"
+    #_snake_head_images_path = ["../media/head1.png","../media/head2.png","../media/head3.png","../media/head4.png","../media/head5.png","../media/head6.png","../media/head7.png","../media/head8.png"]
     _snake_body_images_path = ["../media/body1.png","../media/body2.png","../media/body3.png"]
 
     # Tiempo de animación para el cambio de imagen.
-    _time_to_refresh = 200
+    _time_to_refresh_apple_frames = 200
 
     @classmethod
     def get_game_title(cls) -> str:
@@ -122,8 +123,8 @@ class Configurations:
         return cls._snake_body_images_path
 
     @classmethod
-    def get_time_to_refresh(cls) -> int:
+    def get_time_to_refresh_apple_frames(cls) -> int:
         """
         Getter _time_to_refresh.
         """
-        return cls._time_to_refresh
+        return cls._time_to_refresh_apple_frames
