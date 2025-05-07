@@ -155,6 +155,9 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
     # Se dibujan las manzanas.
     apples.draw(screen)
 
+    # Se anima la cabeza de la serpiente.
+    snake_body.sprites()[0].animate_snake_head()
+
     # Se dibuja la serpiente, dibujando primero el último bloque y al último la cabeza de la serpiente.
     for snake_block in reversed(snake_body.sprites()):
         snake_block.blit(screen)
@@ -169,4 +172,5 @@ def game_over_screen()-> None:
     """
     Función con la parte del fin del juego.
     """
+
     time.sleep(Configurations.get_game_over_screen_time())

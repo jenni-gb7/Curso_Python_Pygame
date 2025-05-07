@@ -7,11 +7,13 @@ class Configurations:
     _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
     #_background = (234, 137, 154)                      # Fondo de la pantalla en formato RGB.
     _fps = 8                                        # Número máximo de FPS del videojuego.
-    _game_over_screen_time =  1
+    _game_over_screen_time =  5
 
     # Configuraciones de la serpiente.
-    _snake_block_size = 80                          # Tamaño del bloque. Es muy recomendable que sea
-                                                    # divisor común del largo y ancho de _screen_size.
+    _snake_block_size = 80                         # Tamaño del bloque. Es muy recomendable que sea
+
+    _time_to_refresh_head_snake_frames = 300
+                                                  # divisor común del largo y ancho de _screen_size.
     _snake_head_color = (255, 255, 255)             # Color de la cabeza de la serpiente.
     _snake_body_color = (0, 255, 0)                 # Color del cuerpo de la serpiente.
 
@@ -23,8 +25,8 @@ class Configurations:
     # Las rutas de los archivos multimedia.
     _background_image_path = "../media/background_image.jpg"
     _apple_images_path = ["../media/apple1.png", "../media/apple2.png", "../media/apple3.png", "../media/apple4.png"]
-    _snake_head_image_path = "../media/head1.png"
-    #_snake_head_images_path = ["../media/head1.png","../media/head2.png","../media/head3.png","../media/head4.png","../media/head5.png","../media/head6.png","../media/head7.png","../media/head8.png"]
+   # _snake_head_images_path = "../media/head1.png"
+    _snake_head_images_path = ["../media/head1.png","../media/head2.png","../media/head3.png","../media/head4.png","../media/head5.png","../media/head6.png","../media/head7.png","../media/head8.png"]
     _snake_body_images_path = ["../media/body1.png","../media/body2.png","../media/body3.png"]
 
     # Tiempo de animación para el cambio de imagen.
@@ -109,11 +111,11 @@ class Configurations:
         return cls._apple_images_path
 
     @classmethod
-    def get_snake_head_image_path(cls) -> str:
+    def get_snake_head_images_path(cls) -> list:
         """
-        Getter _snake_head_image_path.
+        Getter _snake_head_images_path.
         """
-        return cls._snake_head_image_path
+        return cls._snake_head_images_path
 
     @classmethod
     def get_snake_body_images_path(cls) -> list:
@@ -128,3 +130,11 @@ class Configurations:
         Getter _time_to_refresh.
         """
         return cls._time_to_refresh_apple_frames
+
+    @classmethod
+    def get_time_to_refresh_head_frames(cls) -> int:
+        """
+        Getter _time_to_refresh.
+        """
+        return cls._time_to_refresh_head_snake_frames
+
