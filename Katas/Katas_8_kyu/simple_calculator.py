@@ -12,21 +12,24 @@ El tercer argumento debe representar un signo que indique la operación a realiz
 Si las variables no son números o el signo no pertenece a la lista anterior, se debe devolver el mensaje "Valor desconocido".
 """
 
-
 def calculator(x, y, opc):
     if opc == "+":
-        res = x + y
-        return res
+        res1 = x + y
+        print(res1)
     elif opc == "-":
-        return x - y
+        res2 = x - y
+        print(res2)
     elif opc == "*":
-        return x * y
+        res3 = x * y
+        print(res3)
     elif opc == "/":
-        return x / y
+        res4 = x / y
+        print(res4)
     elif opc == "&":
-        return x & y
+        res5 = x & y
+        print(res5)
     else:
-        return "unknown value"
+        print("unknown value")
 
 
 if __name__ == '__main__':
