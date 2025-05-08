@@ -18,7 +18,7 @@ from Configurations import Configurations
 from Game_functionalities import game_events, screen_refresh, snake_movement,check_colision, game_over_screen
 from Snake import SnakeBlock
 from pygame.sprite import Group
-from Media import Background,Audio,Scoreboard
+from Media import Background,Audio,Scoreboard,GameOverImage
 
 
 """NUEVO."""
@@ -34,6 +34,10 @@ def run_game() -> None:
     screen = pygame.display.set_mode(Configurations.get_screen_size())  # Resolución de la pantalla (ancho, alto).
     pygame.display.set_caption(Configurations.get_game_title())         # Se configura el título de la ventana.
     clock = pygame.time.Clock()                     #  Se usa para controlar la velocidad de fotogramas (FPS).
+
+    # Se inicializa la pantalla.
+    screen_size = (1280, 720)  # Resolución de la pantalla (ancho, alto)
+    screen = pygame.display.set_mode(screen_size)
 
     # Se crea el bloque inicial de la serpiente (cabeza) y se inicializa en un lugar aleatorio de la pantalla.
     snake_head = SnakeBlock(is_head = True)

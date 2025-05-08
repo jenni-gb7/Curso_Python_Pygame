@@ -1,10 +1,10 @@
 import time
-
 import pygame
+from PIL.imageChops import screen
 from Configurations import Configurations
 from Snake import SnakeBlock
 from Media import Background,Audio,Scoreboard
-from Snake_game.Version_1_2.Media import GameOverImage
+
 
 """NUEVO."""
 from Apple import Apple
@@ -132,6 +132,8 @@ def check_colision(screen: pygame.surface.Surface,snake_body: pygame.sprite.Grou
         new_apple.random_position(snake_body)
         apples.add(new_apple)
 
+        scoreboard.update(Apple.get_no_apples()-1)
+
         # Se reproduce el sonido de que la serpiente ha comido la manzana.
         audio.play_eats_apple_sound()
 
@@ -159,6 +161,7 @@ def screen_refresh(screen: pygame.surface.Surface, clock: pygame.time.Clock,
 
     # Se anima el movimiento de la manzana.
     apples.sprites()[0].animate_apple()
+    snake_body.sprites()[0].animate_head()
 
     # Se dibujan las manzanas.
     apples.draw(screen)
@@ -183,6 +186,4 @@ def game_over_screen(audio: Audio)-> None:
 
     time.sleep(Configurations.get_game_over_screen_time())
 
-    game_over_image = GameOverImage()
-    game_over_image.blit(screen)
     pygame.display.flip()
