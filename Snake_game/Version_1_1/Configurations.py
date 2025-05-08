@@ -12,8 +12,9 @@ class Configurations:
     # Configuraciones de la serpiente.
     _snake_block_size = 80                          # Tamaño del bloque. Es muy recomendable que sea
                                                     # divisor común del largo y ancho de _screen_size.
-    _snake_head_color = (255, 255, 255)             # Color de la cabeza de la serpiente.
-    _snake_body_color = (0, 255, 0)                 # Color del cuerpo de la serpiente.
+    _time_to_refresh_head_snake_frames = 300  # Tiempo de animación, en ms, de los frames.
+    #_snake_head_color = (255, 255, 255)             # Color de la cabeza de la serpiente.
+    #_snake_body_color = (0, 255, 0)                 # Color del cuerpo de la serpiente.
 
     """NUEVO."""
     # Configuraciones de la manzana.
@@ -23,8 +24,7 @@ class Configurations:
     # Las rutas de los archivos multimedia.
     _background_image_path = "../media/background_image.jpg"
     _apple_images_path = ["../media/apple1.png", "../media/apple2.png", "../media/apple3.png", "../media/apple4.png"]
-    _snake_head_image_path = "../media/head1.png"
-    #_snake_head_images_path = ["../media/head1.png","../media/head2.png","../media/head3.png","../media/head4.png","../media/head5.png","../media/head6.png","../media/head7.png","../media/head8.png"]
+    _snake_head_frames_path = ["../media/head1.png","../media/head2.png","../media/head3.png","../media/head4.png","../media/head5.png","../media/head6.png","../media/head7.png","../media/head8.png"]
     _snake_body_images_path = ["../media/body1.png","../media/body2.png","../media/body3.png"]
 
     # Configuraciones de la música del juego.
@@ -38,7 +38,7 @@ class Configurations:
     _game_over_sound_path = "../media/game_over_sound.wav"
 
     # Tiempo de animación para el cambio de imagen.
-    _time_to_refresh_apple_frames = 200
+    _time_to_refresh_apple_frames = 500
 
     @classmethod
     def get_game_title(cls) -> str:
@@ -69,11 +69,13 @@ class Configurations:
         return cls._snake_block_size
 
     @classmethod
-    def get_snake_head_color(cls) ->  tuple[int, int, int]:
+    def get_time_to_refresh_head_snake_frames(cls) -> float:
         """
-        Getter para _snake_head_color.
+        Getter para _time_to_refresh_head_snake_frames.
         """
-        return cls._snake_head_color
+        return cls._time_to_refresh_head_snake_frames
+
+
 
     @classmethod
     def get_game_over_screen_time(cls) -> int:
@@ -81,13 +83,6 @@ class Configurations:
         Getter para _game_over_screen_time
         """
         return cls._game_over_screen_time
-
-    @classmethod
-    def get_snake_body_color(cls) -> tuple[int, int, int]:
-        """
-        Getter para _snake_body_color.
-        """
-        return cls._snake_body_color
 
     """NUEVO."""
     @classmethod
@@ -119,11 +114,11 @@ class Configurations:
         return cls._apple_images_path
 
     @classmethod
-    def get_snake_head_image_path(cls) -> str:
+    def get_snake_head_frames_path(cls) -> list:
         """
-        Getter _snake_head_image_path.
+        Getter para _snake_head_frames_path.
         """
-        return cls._snake_head_image_path
+        return cls._snake_head_frames_path
 
     @classmethod
     def get_snake_body_images_path(cls) -> list:
