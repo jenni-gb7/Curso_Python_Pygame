@@ -1,13 +1,15 @@
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
-from random import randint,choice
+from random import randint, choice
 
 class SnakeBlock(Sprite):
     """
     Clase que representa un bloque del cuerpo de la serpiente.
     Hereda de la clase Sprite para utilizar grupos de sprites y detectar colisiones entre sprites.
     Sus atributos son: image (apariencia) y rect (posición y tamaño), banderas de movimiento.
+                     De manera especial, la cabeza de la serpiente tiene una lista con los frames para la
+                     animación, así como un índice para manipular el acceso a esa lista.
     Sus métodos son: blit() (dibujar), snake_head_init() (inicializa en una posición aleatoria), getter y
                      setter de las banderas de movimiento.
     """
@@ -26,7 +28,7 @@ class SnakeBlock(Sprite):
         # Se llama al constructor de la clase padre.
         super().__init__()
 
-        # Se selecciona el color dependiendo de si es o no la cabeza de la serpiente.
+        # Si es la cabeza de la serpiente, se almacenan todos los frames que dan la impresión de movimiento.
         if is_head:
             # Lista que almacena los frames de la cabeza de la serpiente.
             self._head_frames = []
@@ -41,20 +43,22 @@ class SnakeBlock(Sprite):
 
             # Se incluyen dos atributos más para la cabeza de la serpiente.
             # Además, la imagen se selecciona como el primer elemento de la lista con los frames.
-            self._last_update_time = pygame.time.get_ticks()  # Se relaciona con el tiempo de actualización de cada frame.
-            self.frame_index = 0  # Índice de la lista.
+            self._last_update_time = pygame.time.get_ticks() # Se relaciona con el tiempo de actualización de cada frame.
+            self.frame_index = 0                             # Índice de la lista.
             self.image = self._head_frames[self.frame_index]
             self.frame_index = 1
+
         else:
             # Se selecciona una imagen aleatoria para el cuerpo de la serpiente.
             body_images_path = Configurations.get_snake_body_images_path()
-            path = choice(body_images_path)
-            self.image = pygame.image.load(path)
+            random_body_image_path = choice(body_images_path)
+            self.image = pygame.image.load(random_body_image_path)
 
+            # Se escala la imagen al tamaño del bloque.
             snake_block_size = Configurations.get_snake_block_size()
-            self.image = pygame.transform.scale(self.image,(snake_block_size,snake_block_size))
+            self.image = pygame.transform.scale(self.image, (snake_block_size, snake_block_size))
 
-         # Se obtiene el rectángulo que representa la posición del sprite.
+        # Se obtiene el rectángulo que representa la posición del sprite.
         self.rect = self.image.get_rect()
 
 
@@ -63,15 +67,25 @@ class SnakeBlock(Sprite):
         Se utiliza para dibujar el bloque de la serpiente en la pantalla.
         :param screen: Pantalla en donde se dibuja el bloque.
         """
+
+        # Se modifica el ángulo de rotación de la imagen de acuerdo al movimiento de la serpiente.
+        # Nota: Se rotan todos los bloques al mismo tiempo. No se está realizando una rotación progresiva,
+        # ya que requeriría adecuar la lógica.
         angle = 0
+
         if SnakeBlock.get_is_moving_up():
             angle = 90
-        elif SnakeBlock.get_is_moving_left():
+
+        if SnakeBlock.get_is_moving_left():
             angle = 180
+
         elif SnakeBlock.get_is_moving_down():
             angle = 270
 
+        # Se rota la imagen de acuerdo al ángulo.
         image_flip = pygame.transform.rotate(self.image,angle)
+
+        # Se dibuja sobre la pantalla.
         screen.blit(image_flip, self.rect)
 
 
@@ -84,6 +98,7 @@ class SnakeBlock(Sprite):
         snake_block_size = Configurations.get_snake_block_size()
         self.rect.x = snake_block_size * randint(0, (screen_width // snake_block_size - 1))
         self.rect.y = snake_block_size * randint(0, (screen_height // snake_block_size - 1))
+
 
     def animate_snake_head(self) -> None:
         """
@@ -104,6 +119,7 @@ class SnakeBlock(Sprite):
             # Finalmente, se verica si el índice ha recorrido todos los frames para volver al inicio de la lista.
             if self.frame_index >= len(self._head_frames):
                 self.frame_index = 0
+
 
     @classmethod
     def get_is_moving_right(cls) -> bool:

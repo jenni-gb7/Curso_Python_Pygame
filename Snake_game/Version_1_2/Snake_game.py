@@ -15,14 +15,12 @@ Versión 0.6:
 # Se importan los módulos necesarios.
 import pygame
 from Configurations import Configurations
-from Game_functionalities import game_events, screen_refresh, snake_movement,check_colision, game_over_screen
+from Game_functionalities import game_events, screen_refresh, snake_movement, check_collisions, game_over_screen
 from Snake import SnakeBlock
 from pygame.sprite import Group
-from Media import Background,Audio,Scoreboard,GameOverImage
-
-
-"""NUEVO."""
 from Apple import Apple
+"""CAMBIO. Ahora también se importa la clase Scoreboard."""
+from Media import Background, Audio, Scoreboard
 
 
 def run_game() -> None:
@@ -35,10 +33,6 @@ def run_game() -> None:
     pygame.display.set_caption(Configurations.get_game_title())         # Se configura el título de la ventana.
     clock = pygame.time.Clock()                     #  Se usa para controlar la velocidad de fotogramas (FPS).
 
-    # Se inicializa la pantalla.
-    screen_size = (1280, 720)  # Resolución de la pantalla (ancho, alto)
-    screen = pygame.display.set_mode(screen_size)
-
     # Se crea el bloque inicial de la serpiente (cabeza) y se inicializa en un lugar aleatorio de la pantalla.
     snake_head = SnakeBlock(is_head = True)
     snake_head.snake_head_init()
@@ -47,7 +41,6 @@ def run_game() -> None:
     snake_body = Group()
     snake_body.add(snake_head)
 
-    """NUEVO."""
     # Se crea una manzana en una posición inicial aleatoria en la pantalla.
     apple = Apple()
     apple.random_position(snake_body)
@@ -56,45 +49,48 @@ def run_game() -> None:
     apples = Group()
     apples.add(apple)
 
-    # Ciclo principal del videojuego.
-
-    # Se crea el objeto con el fondo del videojuego.
+    # Se crea el objeto del fondo de pantalla.
     background = Background()
 
     # Se crea el objeto con el sonido del juego y se reproduce la música y el sonido inicial del juego.
     audio = Audio()
-    audio.play_music(volume=Configurations.get_music_volume())
+    audio.play_music(volume = Configurations.get_music_volume())
     audio.play_star_sound()
 
+    """NUEVO."""
+    # Se crea el objeto con el marcador del juego.
     scoreboard = Scoreboard()
 
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
-        """CAMBIO. Ahora la función recibe el grupo de manzanas."""
         # Función que administra los eventos del juego.
-        game_over =game_events()
+        game_over = game_events()
 
-        # Condición de que cerró la ventana.
+        # Si el usuario ha cerrado la ventana, entonces se termina el ciclo inmediatamente para cerrar la ventana.
         if game_over:
             break
 
         # Función que administra el movimiento de la serpiente.
         snake_movement(snake_body)
 
-        # Se revisan las colisiones en el juego.
-        game_over = check_colision(screen,snake_body,apples,audio)
+        """CAMBIO. Ahora también recibe el objeto con el marcador."""
+        # Función que revisa las colisiones en el juego.
+        game_over = check_collisions(screen, snake_body, apples, audio, scoreboard)
 
-        """CAMBIO. Ahora la función recibe el grupo de manzanas."""
+        """CAMBIO. Ahora también recibe el objeto con el marcador."""
         # Función que administra los elementos de la pantalla.
-        screen_refresh(screen, clock, snake_body, apples,background,scoreboard)
+        screen_refresh(screen, clock, snake_body, apples, background, scoreboard)
 
-        # Si se ha perdido el juego, se llama
+        # Si el usuario ha perdido la partida, entonces se llama a la función que muestra la pantalla
+        # del fin del juego.
         if game_over:
-            game_over_screen(audio)
+            """CAMBIO. Ahora también recibe el objeto de la pantalla."""
+            game_over_screen(screen, audio)
 
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()
+
 
 
 """ %%%%%%%     CÓDIGO A NIVEL DE MÓDULO    %%%%%%%%%%%%%%%%%%%%% """

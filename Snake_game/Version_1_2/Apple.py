@@ -1,16 +1,14 @@
-from asyncio import current_task
-
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
 from random import randint
 
 class Apple(Sprite):
-
     """
     Clase que representa una manzana.
     Hereda de la clase Sprite para utilizar grupos de sprites y detectar colisiones entre sprites.
-    Sus atributos son: image (apariencia), rect (posición y tamaño) y no_apples (contador).
+    Sus atributos son: image (apariencia), rect (posición y tamaño), no_apples (contador), lista con los frames
+                     para la animación, así como un índice para manipular el acceso a esa lista.
     Sus métodos son: blit() (dibujar), random_position() (ubicación aleatoria en la pantalla) y el getter del
                      atributo de clases para la puntuación.
     """
@@ -27,26 +25,25 @@ class Apple(Sprite):
         # Se incrementa el atributo de clase.
         Apple._no_apples += 1
 
+        # Lista que almacena los frames de la cabeza de la serpiente.
         self._apple_frames = []
+
+        # Cada uno de los frames se debe de escalar antes de ser guardado en la lista.
         apple_block_size = Configurations.get_apple_block_size()
 
-        for i in range(len(Configurations.get_apples_images_path())):
-            frame = pygame.image.load(Configurations.get_apples_images_path()[i])
-            frame = pygame.transform.scale(frame,(apple_block_size,apple_block_size))
+        for i in range(len(Configurations.get_apple_frames_path())):
+            frame = pygame.image.load(Configurations.get_apple_frames_path()[i])
+            frame = pygame.transform.scale(frame, (apple_block_size, apple_block_size))
             self._apple_frames.append(frame)
 
-        self._last_update_time = pygame.time.get_ticks()
-
-        self._frame_index = 0
-
-
-        #self.image = pygame.image.load(Configurations.get_apple_images_path()[0])
-        #self.image = pygame.transform.scale(self.image,(apple_block_size,apple_block_size))
-
-        # Se obtiene el rectángulo que representa la posición del sprite.
-
+        # Se incluyen dos atributos más para la cabeza de la serpiente.
+        # Además, la imagen se selecciona como el primer elemento de la lista con los frames.
+        self._last_update_time = pygame.time.get_ticks()    # Se relaciona con el tiempo de actualización de cada frame.
+        self._frame_index = 0                               # Índice de la lista.
         self.image = self._apple_frames[self._frame_index]
         self._frame_index = 1
+
+        # Se obtiene el rectángulo que representa la posición del sprite.
         self.rect = self.image.get_rect()
 
 
@@ -58,7 +55,7 @@ class Apple(Sprite):
         screen.blit(self.image, self.rect)
 
 
-    def random_position(self,snake_body: pygame.sprite.Group) -> None:
+    def random_position(self, snake_body: pygame.sprite.Group) -> None:
         """
         Se utiliza para inicializar una ubicación aleatoria de la manzana, restringiendo a las ubicaciones
         en donde no se encuentre el cuerpo de la serpiente.
@@ -84,23 +81,27 @@ class Apple(Sprite):
                 else:
                     repeat = False
 
-    def animate_apple(self)-> None:
+
+    def animate_apple(self) -> None:
         """
-        Se utiliza parta actualizar el frame visible de la manzana
-        dando la impresioón de movimiento.
+        Se utiliza para actualizar el frame visible de la manzana, dando la impresión de animación.
         """
+        # Se verifica si el tiempo transcurrido es mayor o igual al tiempo establecido para actualizar el frame.
         current_time = pygame.time.get_ticks()
         time_to_refresh = Configurations.get_time_to_refresh_apple_frames()
-
         needs_refresh = (current_time - self._last_update_time) >= time_to_refresh
 
         if needs_refresh:
+            # En caso verdadero, se actualiza el frame por el siguiente en la lista.
+            # Además, se actualizan los atributos para resetear el tiempo y actualizar el índice.
             self.image = self._apple_frames[self._frame_index]
-
             self._last_update_time = current_time
             self._frame_index += 1
+
+            # Finalmente, se verica si el índice ha recorrido todos los frames para volver al inicio de la lista.
             if self._frame_index >= len(self._apple_frames):
                 self._frame_index = 0
+
 
     @classmethod
     def get_no_apples(cls) -> int:
