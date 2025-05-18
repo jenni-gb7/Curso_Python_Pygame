@@ -29,6 +29,7 @@ def run_game() -> None:
     """
     # Se inicializa el módulo de pygame y se realizan las configuraciones iniciales.
     pygame.init()
+
     screen = pygame.display.set_mode(Configurations.get_screen_size())  # Resolución de la pantalla (ancho, alto).
     pygame.display.set_caption(Configurations.get_game_title())         # Se configura el título de la ventana.
     clock = pygame.time.Clock()                     #  Se usa para controlar la velocidad de fotogramas (FPS).
@@ -86,6 +87,7 @@ def run_game() -> None:
         # del fin del juego.
         if game_over:
             """CAMBIO. Ahora también recibe el objeto de la pantalla."""
+
             game_over_screen(screen, audio)
 
     # Cierra todos los recursos del módulo pygame.

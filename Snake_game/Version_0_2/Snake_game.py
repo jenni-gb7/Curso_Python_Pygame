@@ -4,7 +4,6 @@ Fecha:
 Versión 0.1:
 """
 
-
 # Se importan los módulos del videojuego.
 import pygame
 from Configurations import Configurations
