@@ -1,7 +1,7 @@
 import pygame
 from Configurations import Configurations
-from Media import Background, TurnImage,ResultsImage,CreditsImage
-from TikTacToe import TicTacToeMark
+from media import Background,TurnImage,ResultsImage,CreditsImage
+from TikTacToeMark import TicTacToeMark
 
 def game_events(marks_group,turn_image)-> bool:
     """
@@ -19,26 +19,29 @@ def game_events(marks_group,turn_image)-> bool:
         elif event.type == pygame.KEYDOWN:
             cell = key_map.get(event.key)
             if cell:
-                # Verificar si la celda está libre
-                occupied = any(mark.cell_number == cell for mark in marks_group)
-                if not occupied:
-                    new_mark = TicTacToeMark(cell)
-                    marks_group.add(new_mark)
+                #Si se presiona la tecla correspondiente y la casilla  no esta ocupada.
+                celda_ocupada=True
+                for mark in marks_group:
+                    if mark.numero_celda == cell:
+                        celda_ocupada= False  # Asignación correcta
+                        break
+                if celda_ocupada:
+                    mark = TicTacToeMark(cell)
+                    marks_group.add(mark)
                     turn_image.change_turn(TicTacToeMark.turno)
     # Se regresa  la bandera.
     return game_over
 
-def screen_refresh(screen: pygame.surface.Surface,clock: pygame.time.Clock,background: Background,marks_group, turn_image: TurnImage)-> None:
+def screen_refresh(screen: pygame.surface.Surface,clock: pygame.time.Clock,background: Background,marks_group,turn_image:TurnImage)-> None:
     """
     Función que administra los elementos visuales del juego.
     """
     # Se dibuja el fondo de la pantalla.
-    background.blit(screen)
 
+    background.blit(screen)
     # Se dibujan las marcas
     marks_group.draw(screen)
-
-    # Se dibujan los turnos.
+    #se dibujan los turnos
     turn_image.blit(screen)
 
     # Se actualiza la pantalla.
@@ -53,7 +56,7 @@ def check_winner(marks_group):
     board = {}  # {1: "X", 2: "O", ..., 9: "X"}
 
     for mark in marks_group:
-        board[mark.cell_number] = mark.turno  # Usamos el atributo turn que tiene "X" u "O"
+        board[mark.numero_celda] = mark.turno  # Usamos el atributo turn que tiene "X" u "O"
 
     # Posibles combinaciones ganadoras
     winning_combinations = [
@@ -74,20 +77,27 @@ def check_winner(marks_group):
     # Si no hay ganador ni empate, el juego sigue
     return False, ""
 
-def game_over_screen(screen, clock, background, marks_group, turn_image, result):
-    result_image = ResultsImage(result)
+
+def game_over_screen(screen: pygame.surface.Surface, clock: pygame.time.Clock, background: Background, marks_group,
+                     turn_image: TurnImage, resultado: str):
+
+    results_image = ResultsImage(resultado)
     credits_image = CreditsImage()
 
-    for _ in range(3):  # 3 ciclos de parpadeo (mostrar y ocultar)
+
+    for i in range(3):
+        # Mostrar resultado
         screen_refresh(screen, clock, background, marks_group, turn_image)
-        result_image.blit(screen)
+        results_image.blit(screen)
         pygame.display.flip()
         pygame.time.wait(500)
 
+        # Redibujar pantalla
         screen_refresh(screen, clock, background, marks_group, turn_image)
         pygame.display.flip()
         pygame.time.wait(500)
 
+    # Mostrar pantalla final con créditos
     credits_image.blit(screen)
     pygame.display.flip()
-    pygame.time.wait(2500)
+    pygame.time.wait(550)

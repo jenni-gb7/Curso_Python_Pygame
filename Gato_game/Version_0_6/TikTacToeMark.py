@@ -1,3 +1,4 @@
+
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
@@ -14,28 +15,26 @@ class TicTacToeMark(Sprite):
 
     turno = "X"
 
-    def __init__(self, cell_number: int):
+    def __init__(self, numero_celda: int):
         """
         Constructor de la marca en la celda especificada.
 
-        :param cell_number: número de la celda (1 al 9)
+        :param numero_celda: número de la celda (1 al 9)
         """
-
         super().__init__()
-        self.cell_number = cell_number  # guarda el número de celda en el objeto
+        self.numero_celda=numero_celda
+        self.turno=TicTacToeMark.turno
 
-        if TicTacToeMark.turno == 'X':
-            #markX_image_path = Configurations.get_markX_image_path()
+        if self.turno == 'X':
             self.image = pygame.image.load("../media/markX.png")
             TicTacToeMark.turno = 'O'
         else:
-            #markO_image_path= Configurations.get_markO_image_path()
             self.image = pygame.image.load("../media/markO.png")
             TicTacToeMark.turno = 'X'
 
         self.image = pygame.transform.scale(self.image, (80, 80))  # ajusta al tamaño adecuado
         self.rect = self.image.get_rect()  # luego calculamos rect
-        self.rect.center = Configurations.get_position(cell_number)
+        self.rect.center = Configurations.get_position(numero_celda)
 
     def blit(self,screen: pygame.surface.Surface):
         """
@@ -47,4 +46,4 @@ class TicTacToeMark(Sprite):
         """
         Método de acceso para obtener el número de celda donde está esta marca.
         """
-        return self.cell_number
+        return self.numero_celda
