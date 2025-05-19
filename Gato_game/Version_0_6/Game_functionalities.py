@@ -1,6 +1,6 @@
 import pygame
 from Configurations import Configurations
-from Media import Background, TurnImage
+from Media import Background, TurnImage,ResultsImage,CreditsImage
 from TikTacToe import TicTacToeMark
 
 def game_events(marks_group,turn_image)-> bool:
@@ -19,16 +19,11 @@ def game_events(marks_group,turn_image)-> bool:
         elif event.type == pygame.KEYDOWN:
             cell = key_map.get(event.key)
             if cell:
-                # Si se presiona la tecla correspondiente y la casilla no está siendo utilizada.
-                occupied_cell=True
-                for mark in marks_group:
-                    if mark.cell_number== cell:
-                    # Compara el número de celda de la marca actual.
-                        occupied_cell= False  # Asignación correcta
-                        break
-                if occupied_cell:
-                    mark = TicTacToeMark(cell)
-                    marks_group.add(mark)
+                # Verificar si la celda está libre
+                occupied = any(mark.cell_number == cell for mark in marks_group)
+                if not occupied:
+                    new_mark = TicTacToeMark(cell)
+                    marks_group.add(new_mark)
                     turn_image.change_turn(TicTacToeMark.turno)
     # Se regresa  la bandera.
     return game_over
@@ -52,12 +47,13 @@ def screen_refresh(screen: pygame.surface.Surface,clock: pygame.time.Clock,backg
     # Se controla la velocidad de FPS
     clock.tick(Configurations.get_fps())
 
+
 def check_winner(marks_group):
     # Diccionario con las marcas en cada celda
     board = {}  # {1: "X", 2: "O", ..., 9: "X"}
 
     for mark in marks_group:
-        board[mark.cell_number] = mark.turn  # Usamos el atributo turn que tiene "X" u "O"
+        board[mark.cell_number] = mark.turno  # Usamos el atributo turn que tiene "X" u "O"
 
     # Posibles combinaciones ganadoras
     winning_combinations = [
@@ -78,3 +74,20 @@ def check_winner(marks_group):
     # Si no hay ganador ni empate, el juego sigue
     return False, ""
 
+def game_over_screen(screen, clock, background, marks_group, turn_image, result):
+    result_image = ResultsImage(result)
+    credits_image = CreditsImage()
+
+    for _ in range(3):  # 3 ciclos de parpadeo (mostrar y ocultar)
+        screen_refresh(screen, clock, background, marks_group, turn_image)
+        result_image.blit(screen)
+        pygame.display.flip()
+        pygame.time.wait(500)
+
+        screen_refresh(screen, clock, background, marks_group, turn_image)
+        pygame.display.flip()
+        pygame.time.wait(500)
+
+    credits_image.blit(screen)
+    pygame.display.flip()
+    pygame.time.wait(2500)

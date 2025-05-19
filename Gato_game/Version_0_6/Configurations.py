@@ -15,8 +15,10 @@ class Configurations:
     #_markX_image_path = "../media/markX.png"
     _turnO_image = "../media/turnO.png"
     _turnX_image = "../media/turnX.png"
-    _winO = "../media/turnO.png"
-    _winX = "../media/turnX.png"
+    _winO_image = "../media/winO.png"
+    _winX_image = "../media/winX.png"
+    _draw_image = "../media/draw.png"
+    _credits_image = "../media/credits_image.png"
     # Posixiones de acuerdo a las teclas.
     _key_to_cell = {
         pygame.K_q: 1, pygame.K_w: 2, pygame.K_e: 3,
@@ -69,6 +71,23 @@ class Configurations:
         :return: coordenadas (x, y) de la celda
         """
         return cls._cell_positions.get(cell, (0, 0))
+#-------------------------------------
+
+    @classmethod
+    def get_winO_image(cls)-> str:
+        return cls._winO_image
+
+    @classmethod
+    def get_winX_image(cls)-> str:
+        return cls._winX_image
+
+    @classmethod
+    def get_draw_image(cls)-> str:
+        return cls._draw_image
+
+    @classmethod
+    def get_credits_image(cls)-> str:
+        return cls._credits_image
 
 
 

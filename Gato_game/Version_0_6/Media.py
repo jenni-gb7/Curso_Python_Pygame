@@ -50,3 +50,27 @@ class TurnImage:
 
     def blit(self, screen: pygame.surface.Surface):
         screen.blit(self.image, self.rect)
+#-----------------------------------------
+class ResultsImage:
+    def __init__(self,result):
+        if result == "X":
+            image = Configurations.get_winX_image()
+        elif result == "O":
+            image = Configurations.get_winO_image()
+        else:
+            image = Configurations.get_draw_image()
+
+        self.image = pygame.transform.scale(pygame.image.load(image), (800, 200))
+        self.rect = self.image.get_rect(center=(640, 360))
+
+    def blit(self, screen):
+        screen.blit(self.image, self.rect)
+
+#----------------------------------------
+class CreditsImage:
+    def __init__(self):
+        self.image = pygame.transform.scale(pygame.image.load(Configurations.get_credits_image()), (600, 150))
+        self.rect = self.image.get_rect(center=(640, 580))
+
+    def blit(self, screen):
+        screen.blit(self.image, self.rect)
