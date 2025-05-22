@@ -8,9 +8,7 @@ Descripción:
 
 import pygame
 from pygame.sprite import Sprite
-
 from Configurations import Configurations
-
 
 class Soldiers(Sprite):
     """
@@ -33,15 +31,10 @@ class Soldiers(Sprite):
 
         #posicion el soldado
         screen_rect = screen.get_rect()
-        self.rect.centery = screen_rect.centery
+        self.rect.center = screen_rect.center
         self.rect.right = screen_rect.right
         #c self.rect.center = screen_rect.center
-        """
-        i
-        self.rect.centery = screen_rect.centery
-        self.rect.left = screen_rect.left
 
-        """
 
     def blit(self, screen: pygame.surface.Surface):
         """
