@@ -1,35 +1,40 @@
-"""
-Nombre: Equipo los Bugs.
-Fecha: 13 de mayo del 2025.
-
-Descripción:
-"""
-
 class Configurations:
     """
     Clase que contiene todas las configuraciones del juego.
     """
-    #Definimos el tamaño de la pantalla, el título, la ruta del fondo y los fps del juego.
-    _screen_size = (1280, 720)
-    _game_title = "Soldiers vs aliens"
-    _background_image_path =  "../media/fondo.jpg"
-    _soldado_block_size = (150,150)  #Tamaño
-    _personaje_image_path = "../media/personaje.jpg"
-    _fps = 8  #fps del juego.
+    # Configuraciones de la pantalla.
+    _game_title = "Soldados vs aliens"              # Título de la ventana.
+    _screen_size = (1280, 720)                      # Resolución de la pantalla (ancho, alto).
+    _fps = 30                                       # Número máximo de FPS del videojuego.
+
+    # Configuraciones del soldado.
+    _soldier_size = (142, 76)                       # Escala del soldado (ancho, alto).
+    """NUEVO."""
+    _frames_per_row = 4                             # Número de frames que contiene cada fila de la hoja de frames.
+    _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms).
+    _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
+
+    """CAMBIO. La propiedad _soldier_image_path se modificó por _soldier_sheet_path, que contiene los frames.
+               Además, se cambió la ruta de la imagen png."""
+    # Rutas de las imágenes utilizadas.
+    _background_image_path = "../media/background_image.jpg"
+    _soldier_sheet_path = "../media/soldier-idle-sheet.png"
+
+
+    """ %%%%%%%     MÉTODOS DE ACCESO.    %%%%%%%%%%%%%%%%%%%%% """
+    @classmethod
+    def get_game_title(cls) -> str:
+        """
+        Getter para _game_title.
+        """
+        return cls._game_title
 
     @classmethod
     def get_screen_size(cls) -> tuple[int, int]:
         """
-        Getter para screen_size.
+        Getter para _screen_size.
         """
-        return cls._screen_size  #Regresamos el tamaño de la pantalla.
-
-    @classmethod
-    def get_game_title(cls) -> str:
-        """
-        Getter para get_game_title.
-        """
-        return cls._game_title  #Regresamos el título del juego.
+        return cls._screen_size
 
     @classmethod
     def get_fps(cls) -> int:
@@ -39,19 +44,47 @@ class Configurations:
         return cls._fps
 
     @classmethod
+    def get_soldier_size(cls) -> tuple[int, int]:
+        """
+        Getter para _soldier_size.
+        """
+        return cls._soldier_size
+
+    """NUEVO."""
+    @classmethod
+    def get_frames_per_row(cls) -> int:
+        """
+        Getter para _soldier_frames_per_row.
+        """
+        return cls._frames_per_row
+
+    """NUEVO."""
+    @classmethod
+    def get_soldier_frame_delay(cls) -> int:
+        """
+        Getter para _soldier_frame_delay.
+        """
+        return cls._soldier_frame_delay
+
+    """NUEVO."""
+    @classmethod
+    def get_soldier_speed(cls) -> float:
+        """
+        Getter para _soldier_speed.
+        """
+        return cls._soldier_speed
+
+    @classmethod
     def get_background_image_path(cls) -> str:
         """
         Getter para _background_image_path.
         """
         return cls._background_image_path
 
+    """CAMBIO. El método de acceso cambió de acuerdo al cambio del parámetro utilizado."""
     @classmethod
-    def get_personaje_image_path(cls) -> str:
+    def get_soldier_sheet_path(cls) -> str:
         """
-        Getter para _personaje.
+        Getter para _soldier_sheet_path.
         """
-        return cls._personaje_image_path
-
-    @classmethod
-    def get_soldado_block_size(cls) -> tuple[int, int]:
-        return cls._soldado_block_size
+        return cls._soldier_sheet_path

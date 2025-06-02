@@ -1,59 +1,72 @@
-"""
-Nombre: Equipo los Bugs
-Fecha: 13 de mayo del 2025.
-
-Descripción:
-
-"""
 
 import pygame
 from Configurations import Configurations
 from Media import Background
-from Soldier import Soldiers
+from Soldier import Soldier
 
 
-def game_event(personaje: Soldiers ) -> bool:
+"""CAMBIO. Ahora recibe el objeto del soldado."""
+def game_events(soldier: Soldier) -> bool:
     """
     Función que administra los eventos del juego.
-    Recibe al objeto y su clase.
-    return: La bandera del fin del juego.
+    :param soldier: Objeto con el soldado (personaje principal).
+    :return: La bandera de fin del juego.
     """
-
+    # Se declara la bandera de fin del juego que se retorna.
     game_over = False
 
-    #Revisamos todos los eventos generados por el usuario.
+    # Se verifican los eventos (teclado y ratón) del juego.
     for event in pygame.event.get():
-        #Si el usuario cierra la ventana, terminamos el juego.
+        # El evento es un clic para cerrar el juego.
         if event.type == pygame.QUIT:
             game_over = True
-        # El evento es presionar una tecla.
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
-                personaje.is_moving_up = True
-            if event.key == pygame.K_DOWN:
-                personaje.is_moving_down = True
-        # El evento al soltar una tecla.
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_UP:
-                personaje.is_moving_up = False
-            if event.key == pygame.K_DOWN:
-                personaje.is_moving_down = False
 
+        """NUEVO."""
+        # Se verifica el evento de presionar una tecla.
+        if event.type == pygame.KEYDOWN:
+            # Se verifica las flechas para el movimiento.
+            if event.key == pygame.K_UP:
+                soldier.is_moving_up = True
+
+            if event.key == pygame.K_DOWN:
+                soldier.is_moving_down = True
+
+        """NUEVO."""
+        # Se verifica el evento de soltar una tecla.
+        if event.type == pygame.KEYUP:
+            # Se verifica las flechas para dejar de moverse.
+            if event.key == pygame.K_UP:
+                soldier.is_moving_up = False
+
+            if event.key == pygame.K_DOWN:
+                soldier.is_moving_down = False
+
+    # Se regresa la bandera.
     return game_over
 
 
 def screen_refresh(screen: pygame.surface.Surface,
-                   clock: pygame.time.Clock, background: Background,
-                   personaje: Soldiers) -> None:
+                   clock: pygame.time.Clock,
+                   background: Background,
+                   soldier: Soldier) -> None:
     """
-    Función que administra los elementos visuales del juego.
+    Función que administra los elementos de la pantalla.
+    :param screen: Objeto con la pantalla.
+    :param clock: Objeto con el reloj del videojuego.
+    :param background: Objeto con el fondo de pantalla.
+    :param soldier: Objeto con el soldado (personaje principal).
     """
-    #Dibujamos la imagen de fondo en la pantalla.
+    # Se dibuja el fondo de la pantalla.
     background.blit(screen)
-    # Llama a la función de la posici+on del soldado.
-    personaje.update_position()
-    personaje.blit(screen)
 
-    pygame.display.flip()  #Actualizamos el contenido de la ventana.
+    """CAMBIO. Ahora se actualiza la posición del soldado y se muestra su animación."""
+    # Se actualiza la posición del soldado, se anima su sprite y se dibuja en la pantalla.
+    soldier.update_position(screen)
+    soldier.update_animation()
+    soldier.blit(screen)
 
+    # Se actualiza la pantalla, dando la impresión de movimiento.
+    pygame.display.flip()
+
+    # Se controla la velocidad de fotogramas (FPS) del videojuego.
     clock.tick(Configurations.get_fps())
