@@ -9,19 +9,23 @@ class Configurations:
 
     # Configuraciones del soldado.
     _soldier_size = (142, 76)                       # Escala del soldado (ancho, alto).
-    _shot_size = (142, 76)  # Escala de la bala (ancho, alto).
-    """NUEVO."""
-    _frames_per_row = 4                             # Número de frames que contiene cada fila de la hoja de frames.
+    _soldier_frames_per_row = 4                     # Número de frames que contiene cada fila de la hoja de frames.
     _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms).
     _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
-    _shot_frame_delay = 300  # Tiempo de cada frame del personaje (en ms).
-    _shot_speed = 12.5  # Velocidad (en píxeles) del balas.
-    """CAMBIO. La propiedad _soldier_image_path se modificó por _soldier_sheet_path, que contiene los frames.
-               Además, se cambió la ruta de la imagen png."""
+
+    """NUEVO."""
+    # Configuraciones de los disparos.
+    _shot_size = (32, 32)                           # Escala del disparo (ancho, alto).
+    _shot_frames_per_row = 4                        # Número de frames que contiene cada fila de la hoja de frames.
+    _shot_frame_delay = 100                         # Tiempo de cada frame del disparo (en ms) para la animación del descanso.
+    _shot_speed = 32.5                              # Velocidad (en píxeles) del disparo.
+
     # Rutas de las imágenes utilizadas.
     _background_image_path = "../media/background_image.jpg"
     _soldier_sheet_path = "../media/soldier-idle-sheet.png"
+    """NUEVO."""
     _shot_sheet_path = "../media/shot-sheet.png"
+
 
     """ %%%%%%%     MÉTODOS DE ACCESO.    %%%%%%%%%%%%%%%%%%%%% """
     @classmethod
@@ -53,21 +57,12 @@ class Configurations:
         return cls._soldier_size
 
     @classmethod
-    def get_shot_size(cls) -> tuple[int, int]:
-        """
-        Getter para _soldier_size.
-        """
-        return cls._shot_size
-
-    """NUEVO."""
-    @classmethod
-    def get_frames_per_row(cls) -> int:
+    def get_soldier_frames_per_row(cls) -> int:
         """
         Getter para _soldier_frames_per_row.
         """
-        return cls._frames_per_row
+        return cls._soldier_frames_per_row
 
-    """NUEVO."""
     @classmethod
     def get_soldier_frame_delay(cls) -> int:
         """
@@ -76,20 +71,37 @@ class Configurations:
         return cls._soldier_frame_delay
 
     @classmethod
-    def get_shot_frame_delay(cls) -> int:
-        """
-        Getter para _soldier_frame_delay.
-        """
-        return cls._shot_frame_delay
-
-    """NUEVO."""
-    @classmethod
     def get_soldier_speed(cls) -> float:
         """
         Getter para _soldier_speed.
         """
         return cls._soldier_speed
 
+    """NUEVO."""
+    @classmethod
+    def get_shot_size(cls) -> tuple[int, int]:
+        """
+        Getter para _shot_size.
+        """
+        return cls._shot_size
+
+    """NUEVO."""
+    @classmethod
+    def get_shot_frames_per_row(cls) -> int:
+        """
+        Getter para _soldier_frames_per_row.
+        """
+        return cls._shot_frames_per_row
+
+    """NUEVO."""
+    @classmethod
+    def get_shot_frame_delay(cls) -> int:
+        """
+        Getter para _shot_frame_delay.
+        """
+        return cls._shot_frame_delay
+
+    """NUEVO."""
     @classmethod
     def get_shot_speed(cls) -> float:
         """
@@ -104,7 +116,6 @@ class Configurations:
         """
         return cls._background_image_path
 
-    """CAMBIO. El método de acceso cambió de acuerdo al cambio del parámetro utilizado."""
     @classmethod
     def get_soldier_sheet_path(cls) -> str:
         """
@@ -112,9 +123,10 @@ class Configurations:
         """
         return cls._soldier_sheet_path
 
+    """NUEVO."""
     @classmethod
     def get_shot_sheet_path(cls) -> str:
         """
-        Getter para _soldier_sheet_path.
+        Getter para _shot_sheet_path.
         """
         return cls._shot_sheet_path
