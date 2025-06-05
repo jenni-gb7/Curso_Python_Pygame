@@ -10,6 +10,7 @@ class Configurations:
     # Configuraciones del soldado.
     _soldier_size = (142, 76)                       # Escala del soldado (ancho, alto).
     _soldier_frames_per_row = 4                     # Número de frames que contiene cada fila de la hoja de frames.
+    _soldier_frames_per_columns = 2           # Declaración de columnas
     _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms).
     _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
 
@@ -22,7 +23,7 @@ class Configurations:
 
     # Rutas de las imágenes utilizadas.
     _background_image_path = "../media/background_image.jpg"
-    _soldier_sheet_path = "../media/soldier-idle-sheet.png"
+    _soldier_sheet_path = "../Media/soldier-idle_shooting_sheet.png"
     """NUEVO."""
     _shot_sheet_path = "../media/shot-sheet.png"
 
@@ -62,6 +63,13 @@ class Configurations:
         Getter para _soldier_frames_per_row.
         """
         return cls._soldier_frames_per_row
+
+    @classmethod
+    def get_soldier_frames_per_columns(cls) -> int:
+        """
+        Getter para _soldier_frames_per_row.
+        """
+        return cls._soldier_frames_per_columns
 
     @classmethod
     def get_soldier_frame_delay(cls) -> int:
