@@ -11,7 +11,6 @@ from Configurations import Configurations
 from Game_functionalities import game_events, screen_refresh
 from Media import Background
 from Soldier import Soldier
-"""NUEVO."""
 from pygame.sprite import Group
 
 
@@ -35,18 +34,15 @@ def run_game() -> None:
     # Se crea el objeto del soldado (personaje principal).
     soldier = Soldier(screen)
 
-    """NUEVO."""
     # Se crea el grupo para almacenar los disparos del soldado.
     gunshots = Group()
 
     # Ciclo principal del videojuego.
     game_over = False
     while not game_over:
-        """CAMBIO. Ahora recibe el grupo de los disparos del soldado."""
         # Función que administra los eventos del juego.
         game_over = game_events(soldier, gunshots)
 
-        """CAMBIO. Ahora recibe el grupo de los disparos del soldado."""
         # Función que administra los elementos de la pantalla.
         screen_refresh(screen, clock, background, soldier, gunshots)
 

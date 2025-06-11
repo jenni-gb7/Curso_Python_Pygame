@@ -10,21 +10,23 @@ class Configurations:
     # Configuraciones del soldado.
     _soldier_size = (142, 76)                       # Escala del soldado (ancho, alto).
     _soldier_frames_per_row = 4                     # Número de frames que contiene cada fila de la hoja de frames.
-    _soldier_frames_per_columns = 2           # Declaración de columnas
-    _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms).
+    """NUEVO."""
+    _soldier_frames_per_column = 2                  # Número de filas de la hoja de frames.
+    _soldier_frame_delay = 300                      # Tiempo de cada frame del personaje (en ms) para la animación del descanso.
+    """NUEVO."""
+    _soldier_shooting_frame_delay = 34              # Tiempo de cada frame del personaje (en ms) para la animación del disparo.
     _soldier_speed = 12.5                           # Velocidad (en píxeles) del personaje.
 
-    """NUEVO."""
     # Configuraciones de los disparos.
     _shot_size = (32, 32)                           # Escala del disparo (ancho, alto).
     _shot_frames_per_row = 4                        # Número de frames que contiene cada fila de la hoja de frames.
-    _shot_frame_delay = 100                         # Tiempo de cada frame del disparo (en ms) para la animación del descanso.
+    _shot_frame_delay = 100                         # Tiempo de cada frame del disparo (en ms).
     _shot_speed = 32.5                              # Velocidad (en píxeles) del disparo.
 
+    """CAMBIO. Se modificó la imagen que se carga para la hoja de sprites del soldado."""
     # Rutas de las imágenes utilizadas.
     _background_image_path = "../media/background_image.jpg"
-    _soldier_sheet_path = "../Media/soldier-idle_shooting_sheet.png"
-    """NUEVO."""
+    _soldier_sheet_path = "../media/soldier-idle_shooting_sheet.png"
     _shot_sheet_path = "../media/shot-sheet.png"
 
 
@@ -64,12 +66,13 @@ class Configurations:
         """
         return cls._soldier_frames_per_row
 
+    """NUEVO."""
     @classmethod
-    def get_soldier_frames_per_columns(cls) -> int:
+    def get_soldier_frames_per_column(cls) -> int:
         """
-        Getter para _soldier_frames_per_row.
+        Getter para _soldier_frames_per_column.
         """
-        return cls._soldier_frames_per_columns
+        return cls._soldier_frames_per_column
 
     @classmethod
     def get_soldier_frame_delay(cls) -> int:
@@ -78,6 +81,14 @@ class Configurations:
         """
         return cls._soldier_frame_delay
 
+    """NUEVO."""
+    @classmethod
+    def get_soldier_shooting_frame_delay(cls) -> int:
+        """
+        Getter para _soldier_shooting_frame_delay.
+        """
+        return cls._soldier_shooting_frame_delay
+
     @classmethod
     def get_soldier_speed(cls) -> float:
         """
@@ -85,7 +96,6 @@ class Configurations:
         """
         return cls._soldier_speed
 
-    """NUEVO."""
     @classmethod
     def get_shot_size(cls) -> tuple[int, int]:
         """
@@ -93,7 +103,6 @@ class Configurations:
         """
         return cls._shot_size
 
-    """NUEVO."""
     @classmethod
     def get_shot_frames_per_row(cls) -> int:
         """
@@ -101,7 +110,6 @@ class Configurations:
         """
         return cls._shot_frames_per_row
 
-    """NUEVO."""
     @classmethod
     def get_shot_frame_delay(cls) -> int:
         """
@@ -109,7 +117,6 @@ class Configurations:
         """
         return cls._shot_frame_delay
 
-    """NUEVO."""
     @classmethod
     def get_shot_speed(cls) -> float:
         """
@@ -131,7 +138,6 @@ class Configurations:
         """
         return cls._soldier_sheet_path
 
-    """NUEVO."""
     @classmethod
     def get_shot_sheet_path(cls) -> str:
         """

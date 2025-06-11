@@ -2,11 +2,9 @@ import pygame
 from Configurations import Configurations
 from Media import Background
 from Soldier import Soldier
-"""NUEVO."""
 from Shot import Shot
 
 
-"""CAMBIO. Ahora recibe el grupo de los disparos del soldado."""
 def game_events(soldier: Soldier, gunshots: pygame.sprite.Group) -> bool:
     """
     Función que administra los eventos del juego.
@@ -32,11 +30,13 @@ def game_events(soldier: Soldier, gunshots: pygame.sprite.Group) -> bool:
             if event.key == pygame.K_DOWN:
                 soldier.is_moving_down = True
 
-            """NUEVO."""
-            # Si se presionó el espacio, entonces se crea un nuevo disparo y se agrega al grupo.
+            """CAMBIO. Ahora también se llama al método soldier.shoots()"""
+            # Si se presionó el espacio, entonces se crea un nuevo disparo y se agrega al grupo. Además, indica que
+            # el soldado está disparando.
             if event.key == pygame.K_SPACE:
                 new_shot = Shot(soldier)
                 gunshots.add(new_shot)
+                soldier.shoots()
 
         # Se verifica el evento de soltar una tecla.
         if event.type == pygame.KEYUP:
@@ -51,7 +51,6 @@ def game_events(soldier: Soldier, gunshots: pygame.sprite.Group) -> bool:
     return game_over
 
 
-"""CAMBIO. Ahora recibe el grupo de los disparos del soldado."""
 def screen_refresh(screen: pygame.surface.Surface,
                    clock: pygame.time.Clock,
                    background: Background,
@@ -73,7 +72,6 @@ def screen_refresh(screen: pygame.surface.Surface,
     soldier.update_animation()
     soldier.blit(screen)
 
-    """NUEVO."""
     # Se actualizan las posiciones, se animan y se dibujan los sprites del grupo de los disparos del soldado.
     for shot in gunshots.sprites():
         shot.update_position()
