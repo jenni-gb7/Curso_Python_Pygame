@@ -1,21 +1,24 @@
-from Piedras import Piedra
 import pygame
-from Game_functionalities import screen_refresh
+from Configurations import Configurations
 from Media import Background
+from Game_functionalities import screen_refresh
+from Piedras import Piedra
 
 def run_game():
     pygame.init()
-    screen = pygame.display.set_mode((1280, 720))
+
+    # Se inicializa la pantalla.
+    screen_size = (1280, 720)
+    screen = pygame.display.set_mode(screen_size)
     clock = pygame.time.Clock()
     pygame.display.set_caption("Fly Bird")
 
     background = Background()
 
-    # Crear muchas piedras separadas por 300 px
     obstacles = []
     initial_x = 800
-    for i in range(6):  # crea 6 obstáculos espaciados
-        obstacles.append(Piedra(initial_x + i * 300))
+    for i in range(6):
+        obstacles.append(Piedra(initial_x + i * 250, screen))
 
     game_over = False
     while not game_over:
@@ -23,19 +26,14 @@ def run_game():
             if event.type == pygame.QUIT:
                 game_over = True
 
-        screen_refresh(screen, clock, background)
+        screen_refresh(screen, background)  # Solo dibuja fondo
 
-        obstacles = []
-        for i in range(6):
-            obstacles.append(Piedra(800 + i * 300, screen))
-
-        # En el bucle principal:
         for obs in obstacles:
-            obs.update_position()
-            obs.blit(screen)
+            obs.update()
+            obs.draw()
 
-        pygame.display.flip()
-        clock.tick(60)
+        pygame.display.flip()  # Muestra el frame completo
+        clock.tick(Configurations.get_fps())  # Controla FPS
 
     pygame.quit()
 if __name__ == '__main__':
