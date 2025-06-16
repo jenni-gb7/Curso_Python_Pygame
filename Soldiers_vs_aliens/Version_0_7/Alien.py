@@ -1,15 +1,22 @@
 import pygame
 from pygame.sprite import Sprite
 from Configurations import Configurations
-from random import choice
+from random import choice, uniform
+
 
 class Alien(Sprite):
     """
     Clase que representa un alienígena enemigo.
     """
 
-    def __init__(self,screen):
+    def __init__(self,screen: pygame.surface.Surface):
         super().__init__()
+
+        movement= [True,False]
+
+        # Banderas de movimiento. Inicialmente, el personaje no se mueve.
+        self._is_moving_up = choice(movement)
+        self._is_moving_down = not self._is_moving_up
 
         # Cargar hoja de sprites del alien
         self._frames = []
@@ -43,17 +50,38 @@ class Alien(Sprite):
 
 
         self._rect_x = float(self.rect.x)
-        self._speed = Configurations.get_alien_speed()
+        self._rect_y = float(self.rect.y)
+        self._speed_x = Configurations.get_alien_speed_x()*uniform(8,1)
+        self._speed_y = Configurations.get_alien_speed_y()*uniform(6,1)
 
-    def update_position(self) -> None:
+    def update_position(self, screen: pygame.surface.Surface) -> None:
         """
         Se utiliza para actualizar la posición del soldado de acuerdo a las banderas de movimiento.
+        :param screen: Pantalla en donde se verifican los límites.
         """
-        # Se actualiza la posición del valor flotante de la posición.
-        self._rect_x += self._speed
-
-        # Se actualiza la posición del rectángulo de acuerdo a la posición.
+        # Se obtiene el rectángulo del borde de la pantalla
+        screen_rect = screen.get_rect()
         self.rect.x = int(self._rect_x)
+
+        # Se verifican los estados de la bandera para modificar la posición.
+        if self._is_moving_up:
+            self._rect_y -= self._speed_y
+
+        elif self._is_moving_down:
+            self._rect_y += self._speed_y
+
+        # Se verifica que el personaje no sobrepase los bordes de la pantalla.
+        if self._rect_y < float(screen_rect.top):
+            self._rect_y = float(screen_rect.y)
+            self._is_moving_down: True
+            self._is_moving_up: False
+
+        elif self._rect_y > (screen_rect.bottom - self.image.get_height()):
+            self._rect_y = float(screen_rect.bottom - self.image.get_height())
+            self._is_moving_down: False
+            self._is_moving_up: True
+        # Se actualiza la posición del rectángulo de acuerdo a la posición.
+        self.rect.y = int(self._rect_y)
 
     def update_animation(self):
         # Se verifica si el tiempo transcurrido es mayor o igual al tiempo establecido para actualizar el frame.
@@ -74,3 +102,32 @@ class Alien(Sprite):
 
     def blit(self, screen):
         screen.blit(self.image, self.rect)
+
+        """ %%%%%%%     MÉTODOS DE ACCESO.    %%%%%%%%%%%%%%%%%%%%% """
+        @property
+        def is_moving_up(self) -> bool:
+            """
+            Getter para self._is_moving_up.
+            """
+            return self._is_moving_up
+
+        @is_moving_up.setter
+        def is_moving_up(self, value: bool) -> None:
+            """
+            Setter para self._is_moving_up
+            """
+            self._is_moving_up = value
+
+        @property
+        def is_moving_down(self) -> bool:
+            """
+            Getter para self._is_moving_down.
+            """
+            return self._is_moving_down
+
+        @is_moving_down.setter
+        def is_moving_down(self, value: bool) -> None:
+            """
+            Setter para self._is_moving_down
+            """
+            self._is_moving_down = value

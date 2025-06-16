@@ -73,7 +73,7 @@ def screen_refresh(screen: pygame.surface.Surface,
 
     # Alienígenas
     for alien in aliens.sprites():
-        alien.update_position()
+        alien.update_position(screen)
         alien.update_animation()
         alien.blit(screen)
 

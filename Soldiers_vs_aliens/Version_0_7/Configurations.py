@@ -25,17 +25,18 @@ class Configurations:
 
     """CAMBIO. Se modificó la imagen que se carga para la hoja de sprites del soldado."""
     # Rutas de las imágenes utilizadas.
-    _background_image_path = "../media/background_image.jpg"
+    _background_image_path = "../media/fondo2.jpg"
     _soldier_sheet_path = "../media/soldier-idle_shooting_sheet.png"
     _shot_sheet_path = "../media/shot-sheet.png"
 
     # Rutas de imágenes de alienígenas (nuevas)
     # Configuraciones de los alienígenas.
     _alien_size = (80, 80)  # Tamaño de cada alienígena (ancho, alto)
-    _alien_sheet_path = ["../media/alien1-Sheet.png", "../media/alien2-Sheet.png"]
+    _alien_sheet_path = ["../media/alien1-Sheet.png", "../media/alien2-Sheet.png","../media/alien3-Sheet.png","../media/alien4-Sheet.png","../media/alien5-Sheet.png"]
     # Rutas de imágenes de alienígenas (nuevas)
     _alien_frame_delay = 300
-    _alien_speed = 4.5  # Velocidad de desplazamiento del alienígena.
+    _alien_speed_x = 4.5  # Velocidad de desplazamiento del alienígena.
+    _alien_speed_y = 4.5
     _alien_frames_per_row = 4  # Número de frames por fila en la hoja de sprites del alienígena.
 
     """ %%%%%%%     MÉTODOS DE ACCESO.    %%%%%%%%%%%%%%%%%%%%% """
@@ -176,8 +177,16 @@ class Configurations:
         return cls._alien_frames_per_row
 
     @classmethod
-    def get_alien_speed(cls) -> float:
+    def get_alien_speed_x(cls) -> float:
         """
         Getter para _soldier_speed.
         """
-        return cls._alien_speed
+        return cls._alien_speed_x
+
+    @classmethod
+    def get_alien_speed_y(cls) -> float:
+        """
+        Getter para _soldier_speed.
+        """
+        return cls._alien_speed_y
+
