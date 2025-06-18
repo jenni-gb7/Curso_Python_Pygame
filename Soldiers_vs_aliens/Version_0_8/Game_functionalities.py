@@ -4,6 +4,7 @@ from Media import Background
 from Soldier import Soldier
 from Alien import Alien
 from Shot import Shot
+from random import randint
 
 
 
@@ -42,16 +43,37 @@ def game_events(soldier: Soldier, gunshots: pygame.sprite.Group) -> bool:
     return game_over
 
 """CAMBIO. Ahora también recibe el objeto con el marcador."""
-def check_collisions(screen: pygame.surface.Surface, shots: pygame.sprite.Group, aliens:pygame.sprite.Group ) -> bool:
-
+def check_collisions(screen: pygame.surface.Surface, snake_body: pygame.sprite.Group,shots: pygame.sprite.Group, aliens: Audio, scoreboard: Scoreboard) -> bool:
+    """
+    Función que revisa las colisiones en el juego: cabeza de la serpiente - cuerpo de la serpiente,
+    cabeza de la serpiente - borde de la pantalla, cabeza de la serpiente - manzana.
+    :param screen: Objeto con la pantalla.
+    :param snake_body: Grupo con el cuerpo de la serpiente.
+    :param apples: Grupo de las manzanas.
+    :param audio: Objeto con el audio del juego.
+    :param scoreboard: Objeto con el marcador.
+    :return: La bandera de fin del juego.
+    """
     # Se declaran variables que se utilizan en la función.
     game_over = False                       # Bandera de fin del juego que se retorna.
     screen_rect = screen.get_rect()         # Se obtiene el rectángulo de la pantalla.
 
-    # se revisan las colisiones de los disparos
-    aliens_gunshots_collisions = pygame.sprite.groupcollide(shots,aliens,True,False)
+   # Se revisaran las colisiones con los disparos,
+    aliens_gunshots_collision=pygame.sprite.groupcollide(shots,aliens,True,False)
 
+    for shot in shots.copy():
+        if shot.rect.left >= screen_rect.right:
+            shots.remove(shot)
+
+    for alien in aliens.copy():
+        if alien.rect.left >= screen_rect.right:
+            aliens.remove(alien)
+    soldier_aliens_collisions= pygame.sprite.groupcollide(soldier,aliens, True, False)
     if len(aliens) <= 5:
+        aliens_to_spawn =randint(0,10)
+        for i in range(aliens_to_spawn):
+            alien = Alien(screen)
+            aliens.add(alien)
         game_over = True
 """
     # Se revisa la colisión entre la cabeza de la serpiente - bordes de la pantalla.
@@ -79,8 +101,9 @@ def check_collisions(screen: pygame.surface.Surface, shots: pygame.sprite.Group,
         # Se actualiza el marcador.
         scoreboard.update(new_score = Apple.get_no_apples() - 1)
 
-    # Se regresa la bandera."""
+    # Se regresa la bandera.
     return game_over
+"""
 
 def screen_refresh(screen: pygame.surface.Surface,
                    clock: pygame.time.Clock,

@@ -4,6 +4,7 @@ Fecha:
 Versión 0.4:
 
 """
+from time import sleep
 
 # Se importan los módulos necesarios.
 import pygame
@@ -57,7 +58,7 @@ def run_game() -> None:
         screen_refresh(screen, clock, background, soldier, gunshots,aliens)
 
         if game_over:
-            sleep(4)
+            sleep(3)
     # Cierra todos los recursos del módulo pygame.
     pygame.quit()
 
